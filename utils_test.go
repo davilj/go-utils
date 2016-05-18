@@ -47,6 +47,8 @@ func TestCpDir(t *testing.T) {
 
   if !reflect.DeepEqual(one,two) {
     t.Error("Copy Dir test failed")
+  } else {
+    RmDir(toFileStr)
   }
 }
 

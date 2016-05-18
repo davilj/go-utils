@@ -32,6 +32,33 @@ func Cp(fromFileStr string, toFileStr string) {
   }
 }
 
+func RmDir(fromDir string) {
+  files, err := ioutil.ReadDir(fromDir)
+  if err != nil {
+    panic("Could not read source dir ")
+  }
+
+  for _,file := range(files) {
+    newFromDir := fromDir + string(filepath.Separator) + file.Name()
+    info, err := os.Stat(newFromDir)
+    if (err!=nil) {
+      panic(err)
+    }
+
+    if info.IsDir() {
+      err = os.RemoveAll(newFromDir)
+      if err!=nil {
+        panic("Could not remove: " + newFromDir)
+      }
+    } else {
+      err = os.Remove(newFromDir)
+      if err!=nil {
+        panic("Could not remove: " + newFromDir)
+      }
+    }
+  }
+}
+
 func CpDir(fromDir string, toDir string) {
   files, err := ioutil.ReadDir(fromDir)
   if err != nil {
